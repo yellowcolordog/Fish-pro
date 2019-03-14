@@ -31,47 +31,40 @@
         #login #submit{
             height: 50px;
         }
+        #login>form #d1{
+            display:none;
+        }
     </style>
     <script src="../static/js/jquery-1.11.3.js"></script>
     <script>
         $(function(){
-            $('#login input:(.c1)').blur(function(){
-                // var email = this.value
-                // var re=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-                // var reg = re.test(email)
-                // if (reg){
+            var match=[0,0,0,0,0] //几个登录条件,有不满足的就
+            // 注册邮箱限制
+            $('#login input:eq(0)').blur(function(){
+                var email = this.value
+                var re=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                var reg = re.test(email)
+                if (reg){
+                    $(this).next().css('display','none')
+                    match[0] = 0
+                }else{
+                    $(this).next().css('display','inline')
+                    match[0] = 1
+                }                
+            })
 
-                // }
-                alert(1)
+            // 注册用户名限制
+            $('#login input:eq(1)').blur(function(){
+                
             })
         })
-        // $(function(){
-        //     $('#login input:nth-child[ ]').blur(function(){
-        //         alert(1)
-        //     })
-        // })
-        // $(function(){
-        //     $('#login input:nth-child[ ]').blur(function(){
-        //         alert(1)
-        //     })
-        // })
-        // $(function(){
-        //     $('#login input:nth-child[ ]').blur(function(){
-        //         alert(1)
-        //     })
-        // })
-        // $(function(){
-        //     $('#login input:nth-child[ ]').blur(function(){
-        //         alert(1)
-        //     })
-        // })
     </script>
 </head>
 <body>
     <div id="login">
         <form action="/00-test" method="post" enctype="multipart/form-data">
             <p>
-                <span>邮箱(账号)</span> <input class='login_r_span' type="text" class="c1" placeholder="请输入邮箱作为登录账号" id=""> 
+                <span>邮箱(账号)</span> <input class='login_r_span' type="text" class="c1" placeholder="请输入邮箱作为登录账号" id=""> <span id="d1">一段红字</span>
                          
             </p>
             <p>
