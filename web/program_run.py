@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost:3306/Blog'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['DEBUG'] = True
 
 
@@ -107,9 +108,37 @@ class Note_comment(db.Model):
     comment_down = db.Column(db.Integer,nullable = True)
     commentator_id = db.Column(db.Integer,nullable = True)
 
-db.drop_all()
-db.create_all()
+# 登录
+@app.route('/login',methods=['GET','POST'])
+def login_views():
+    if request.method =='GET':
+        return render_template('login.html')
+    else:
+        user = User01()
+        r = request.form
+        user.user_phone = int(r['login_phone'])
+        user.user_name = r['login_name']
+        user.user_password = r['login_pwd']
+        user.user_email = r['login_email']
+        
+        db.session.add(user)
+        return render_template('register_success.html')
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+@app.route('/login_phone')
+def login_phone_views():
+    login_phone = request.args['login_phone']
+    # 2. 验证数据是否存在
+    u = User01.query.filter_by(user_phone=login_phone).first()
+    print(login_phone)
+    # 3. 根据结果给出返回值
+    if u:
+        return '1' # 用户名已存在
+    else:
+        return '0' # 用户名不存在
+
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True,port=7777)
