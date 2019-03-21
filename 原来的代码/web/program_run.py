@@ -10,7 +10,7 @@ app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'douniwan'
 
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) 
 
 # create table user01(
 #     user_id int primary key auto_increment,
