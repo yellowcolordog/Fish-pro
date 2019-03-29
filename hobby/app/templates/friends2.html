@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>好友动态</title>
+    <link rel="shortcut icon" href="../static/images/title.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/index.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/friends.css" type="text/css">
+    <script src="../static/js/jquery-1.11.3.js"></script>
+	<script src="../static/js/friends.js"></script>
+    <script>
+        // window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":["tsina","weixin","mail","linkedin","copy","print"],"bdPic":"","bdStyle":"0","bdSize":"32"},"slide":{"type":"slide","bdImg":"3","bdPos":"right","bdTop":"80"}};
+        // with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        function get_notes(userId){
+            window.location.href='/get_notes?userId='+userId
+        }
+    </script>
+</head>
+<body>
+    <h1 onclick="get_notes({{user.id}})">这是user:{{user.name}}</h1>
+    <b></b>
+</body>
+</html>
+
+
