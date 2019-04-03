@@ -37,6 +37,15 @@ def index_views():
         l2 = []
         for j in idos.all():
             l2.append(j[0])
+    elif 'id' in request.cookies and 'name' in request.cookies:
+        user = Users.query.filter_by(id=request.cookies['id'],name = request.cookies['name']).first()
+        if user:
+            id = request.cookies['id']
+            fans = db.session.query(User_attention.user_fan_id).filter(User_attention.user_star_id == id)
+            idos = db.session.query(User_attention.user_star_id).filter(User_attention.user_fan_id == id)
+            l2 = []
+            for j in idos.all():
+                l2.append(j[0])
     # 每页显示的记录数量
     pageSize = 15
     # 接收前段传过来的参数page,,如果没有传递过来，则默认为１，并保存在page变量中
