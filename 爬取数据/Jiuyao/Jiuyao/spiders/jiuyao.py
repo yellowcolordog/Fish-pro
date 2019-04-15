@@ -10,7 +10,7 @@ class JiuyaoSpider(scrapy.Spider):
     # start_urls = ['http://www.9yao.com/']
 
     def start_requests(self):
-        for page in range(2,3):
+        for page in range(4,5):
             # 原网页格式: http://www.9yao.com/gif/index_2.html
             url = 'http://www.9yao.com/'+'/gif/index_%s.html'%page
             print(url) # http://www.9yao.com/gif/index_19.html

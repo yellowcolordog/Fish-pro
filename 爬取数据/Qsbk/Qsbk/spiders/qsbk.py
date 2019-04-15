@@ -12,8 +12,8 @@ class QsbkSpider(scrapy.Spider):
     def parse(self, response):
 
         # # 爬文字
-        # url = aike.com/text/page/3/,
-        # for i in range(2,3):
+        # # url = aike.com/text/page/3/,
+        # for i in range(2,5):
         #     url = self.start_urls[0]+'text/page/%s'%i
         #     yield scrapy.Request(url,callback=self.parse_text)
         
@@ -25,22 +25,27 @@ class QsbkSpider(scrapy.Spider):
 
     # 处理文字页面
     def parse_text(self,response):        
-        contents = response.xpath('//div[@class="content"]/span/text()').extract()
-        # 先去掉内容不全的文章：
-        x = 0
-        for i in contents:
-            # print(type(i))
-            if "查看全文" in i:
-                contents.pop(x)
-                contents.pop(x-1)
-                x =x-2
-            x+=1
+        # print(2)
+        hrefs = response.xpath('//div[@id="content-left"]/div/a[@class="contentHerf"]/@href').extract()
+        # https://www.qiushibaike.com/article/121686485
+        for href in hrefs:
+            url = 'https://www.qiushibaike.com' + href
+            # print(url)
+            # 将文字页面再交给二级页面处理(避免一些文章不展开全文的问题)
+            yield scrapy.Request(url,callback=self.parse_text2)
 
-        # 把文章内容发进管道
-        for c in contents:
-            item = QsbkItem() 
-            item['text_content']=c
-            yield item
+    # https://www.qiushibaike.com/article/121686485  处理单独文字页面,得到文字数据
+    def parse_text2(self,response):
+
+        item = QsbkItem()
+        item['text_title']=response.xpath('//h1[@class="article-title"]/text()')[0].extract()
+        word = response.xpath('//div[@class="content"]/text()')[0].extract()
+        item['text_content'] = word.replace('<br>','\n')
+        # print(item['text_content'])
+        yield item
+
+
+
 
     # 处理图片页面,得到图片数据
     def parse_img(self,response):

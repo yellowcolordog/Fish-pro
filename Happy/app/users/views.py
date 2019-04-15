@@ -144,7 +144,9 @@ def reg_phone_views():
 def check_phone_views():
     phone = request.args["phone_num"]
     key = random.randint(100000, 999999)
-    check_response = send_sms(phone, key)
+    # check_response = send_sms(phone, key)
+    print(key)
+    check_response={"code":2}
     if check_response["code"] == 2:
         check_response = {
             "code": 2,
@@ -166,7 +168,11 @@ def logout_views():
     if "id" in session and "name" in session:
         del session["id"]
         del session["name"]
-    return redirect(url)
+    res = make_response(redirect(url))
+    if "id" in request.cookies:
+        res.delete_cookie('id')
+        res.delete_cookie('name')
+    return res
 
 
 @users.route("/becomeFan")

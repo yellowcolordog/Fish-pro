@@ -11,7 +11,8 @@ import scrapy
 class QsbkItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    text_name =scrapy.Field()
+    text_link =scrapy.Field()
+    text_title = scrapy.Field()
     text_content = scrapy.Field()
 
     img_name = scrapy.Field()

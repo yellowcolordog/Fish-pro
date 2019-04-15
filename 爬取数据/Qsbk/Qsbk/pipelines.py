@@ -19,12 +19,13 @@ class QsbkPipeline(object):
         # 将文字数据存进mysql数据库
         if 'text_content' in item:
             ins1 = "insert into notes(create_date,note_raise,down,user_id) values(now(), 0,0,1);"
-            ins2 = "insert into note_content(title,content,type,note_id) values('%s','%s',1,(select id from notes order by id DESC limit 1));"%('搞笑段子',item['text_content'])
+            ins2 = "insert into note_content(title,content,type,note_id) values(\
+                '%s','%s',1,(select id from notes order by id DESC limit 1));"%(item['text_title'],item['text_content'])
             cursor.execute(ins1)
             db.commit()
             cursor.execute(ins2)
             db.commit()
-            print(1)
+            print(item['text_title'])
          
         # 将图片数据存进mysql数据库
         elif 'img_name' in item:
@@ -44,8 +45,14 @@ class QsbkPipeline(object):
 # 将图片保存到本地
 class QsbkImgPipline(FilesPipeline):
     def get_media_requests(self,item,info):
-        print(item['img_title'])
-        return scrapy.Request(item['img_link'],meta=item)
+        if 'img_name' in item:
+            print(item['img_title'])
+            return scrapy.Request(item['img_link'],meta=item)
+        else:
+            pass
 
     def file_path(self, request, response=None, info=None):
-        return request.meta['img_name']
+        if 'img_name' in request.meta:
+            return request.meta['img_name']
+        else:
+            pass
