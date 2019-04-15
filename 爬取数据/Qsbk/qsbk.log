@@ -1,0 +1,25 @@
+2019-04-15 16:35:48 [scrapy.core.scraper] ERROR: Error processing {'img_link': 'https://pic.qiushibaike.com/system/pictures/12170/121701317/medium/GFQ71IM0FDQJOHBI.jpg',
+ 'img_name': '20190415163540417342.jpg',
+ 'img_title': '👦👦👦怎么解释？？？'}
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/twisted/internet/defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "/home/tarena/正式课/tarena_program/爬取数据/Qsbk/Qsbk/pipelines.py", line 38, in process_item
+    cursor.execute(ins2)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 856, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 1057, in _read_query_result
+    result.read()
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 1340, in read
+    first_packet = self.connection._read_packet()
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 1014, in _read_packet
+    packet.check_error()
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1366, "Incorrect string value: '\\xF0\\x9F\\x91\\xA6\\xF0\\x9F...' for column 'title' at row 1")
